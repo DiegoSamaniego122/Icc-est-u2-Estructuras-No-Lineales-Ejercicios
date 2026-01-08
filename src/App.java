@@ -1,4 +1,9 @@
+
+import java.util.List;
+
 import models.Person;
+import structures.graphs.Graph;
+import structures.node.Node;
 import structures.trees.IntTree;
 import structures.trees.Tree;
 
@@ -6,7 +11,8 @@ public class App {
 
     public static void main(String[] args) {
         showPersonTree();
-        showIntTree();   // ← añadido aquí
+        showIntTree(); // ← añadido aquí
+        runGraph();
     }
 
     private static void showPersonTree() {
@@ -51,5 +57,28 @@ public class App {
         tree.inOrder();
 
         System.out.println("Size: " + tree.size());
+    }
+
+    private static void runGraph() {
+
+        Graph<String> graph = new Graph<>();
+
+        Node<String> nA = new Node<>("A");
+        Node<String> nB = new Node<>("B");
+        Node<String> nC = new Node<>("C");
+        Node<String> nD = new Node<>("D");
+
+        graph.addEdge(nA, nB);
+        graph.addEdge(nA, nC);
+        graph.addEdge(nB, nD);
+
+        graph.printGraph();
+
+        System.out.println("Neighbors de A:");
+
+        List<Node<String>> neighbors = graph.getNeighbors(nA);
+        for (Node<String> n : neighbors) {
+            System.out.println(n + " ");
+        }
     }
 }

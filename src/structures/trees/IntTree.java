@@ -37,7 +37,8 @@ public class IntTree {
     }
 
     private void preOrderRec(Node<Integer> node) {
-        if (node == null) return;
+        if (node == null)
+            return;
 
         System.out.print(node.getValue() + " ");
         preOrderRec(node.getLeft());
@@ -51,7 +52,8 @@ public class IntTree {
     }
 
     private void inOrderRec(Node<Integer> node) {
-        if (node == null) return;
+        if (node == null)
+            return;
 
         inOrderRec(node.getLeft());
         System.out.print(node.getValue() + " ");
@@ -65,7 +67,8 @@ public class IntTree {
     }
 
     private void posOrderRec(Node<Integer> node) {
-        if (node == null) return;
+        if (node == null)
+            return;
 
         posOrderRec(node.getLeft());
         posOrderRec(node.getRight());

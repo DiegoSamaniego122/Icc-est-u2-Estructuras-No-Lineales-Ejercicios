@@ -21,16 +21,18 @@ public class Person implements Comparable<Person> {
     @Override
     public int compareTo(Person other) {
 
-        if (this.age < other.age) return -1;
-        if (this.age > other.age) return 1;
+        if (this.age < other.age)
+            return -1;
+        if (this.age > other.age)
+            return 1;
 
         int cmpName = this.name.compareToIgnoreCase(other.name);
-        if (cmpName != 0) return cmpName;
+        if (cmpName != 0)
+            return cmpName;
 
         return Integer.compare(
                 this.toString().hashCode(),
-                other.toString().hashCode()
-        );
+                other.toString().hashCode());
     }
 
     @Override

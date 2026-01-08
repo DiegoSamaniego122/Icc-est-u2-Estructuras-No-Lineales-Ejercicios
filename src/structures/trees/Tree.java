@@ -32,7 +32,8 @@ public class Tree<T extends Comparable<T>> {
     }
 
     private void print(Node<T> node) {
-        if (node == null) return;
+        if (node == null)
+            return;
 
         print(node.getLeft());
         System.out.println(node.getValue());
@@ -45,7 +46,8 @@ public class Tree<T extends Comparable<T>> {
         while (current != null) {
             int cmp = target.compareTo(current.getValue());
 
-            if (cmp == 0) return current.getValue();
+            if (cmp == 0)
+                return current.getValue();
             current = (cmp < 0) ? current.getLeft() : current.getRight();
         }
         return null;
@@ -56,10 +58,12 @@ public class Tree<T extends Comparable<T>> {
     }
 
     private Person findAge(Node<T> node, int age) {
-        if (node == null) return null;
+        if (node == null)
+            return null;
 
         Person p = (Person) node.getValue();
-        if (p.getAge() == age) return p;
+        if (p.getAge() == age)
+            return p;
 
         Person left = findAge(node.getLeft(), age);
         return (left != null) ? left : findAge(node.getRight(), age);
