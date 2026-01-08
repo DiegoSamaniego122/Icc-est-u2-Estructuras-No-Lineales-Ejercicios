@@ -6,84 +6,79 @@ public class IntTree {
 
     private Node<Integer> root;
 
-    public IntTree() {
-        this.root = null;
-    }
-
-    public void insert(int value) {
-        root = insertRecursive(root, value);
-    }
-
-    private Node<Integer> insertRecursive(Node<Integer> current, int value) {
-        if (current == null) {
-            return new Node<>(value);
+    public void insert(int number) {
+        if (root == null) {
+            root = new Node<>(number);
+        } else {
+            add(root, number);
         }
-
-        if (value < current.value) {
-            current.left = insertRecursive(current.left, value);
-        } else if (value > current.value) {
-            current.right = insertRecursive(current.right, value);
-        }
-
-        return current;
     }
 
-    /* ================= PRE ORDER ================= */
+    private void add(Node<Integer> node, int number) {
+        if (number <= node.getValue()) {
+            if (node.getLeft() == null) {
+                node.setLeft(new Node<>(number));
+            } else {
+                add(node.getLeft(), number);
+            }
+        } else {
+            if (node.getRight() == null) {
+                node.setRight(new Node<>(number));
+            } else {
+                add(node.getRight(), number);
+            }
+        }
+    }
+
+    /* ===== PRE ORDER ===== */
     public void preOrder() {
-        preOrderRecursive(root);
+        preOrderRec(root);
         System.out.println();
     }
 
-    private void preOrderRecursive(Node<Integer> current) {
-        if (current == null)
-            return;
+    private void preOrderRec(Node<Integer> node) {
+        if (node == null) return;
 
-        System.out.print(current.value + " ");
-        preOrderRecursive(current.left);
-        preOrderRecursive(current.right);
+        System.out.print(node.getValue() + " ");
+        preOrderRec(node.getLeft());
+        preOrderRec(node.getRight());
     }
 
-    /* ================= IN ORDER ================= */
+    /* ===== IN ORDER ===== */
     public void inOrder() {
-        inOrderRecursive(root);
+        inOrderRec(root);
         System.out.println();
     }
 
-    private void inOrderRecursive(Node<Integer> current) {
-        if (current == null)
-            return;
+    private void inOrderRec(Node<Integer> node) {
+        if (node == null) return;
 
-        inOrderRecursive(current.left);
-        System.out.print(current.value + " ");
-        inOrderRecursive(current.right);
+        inOrderRec(node.getLeft());
+        System.out.print(node.getValue() + " ");
+        inOrderRec(node.getRight());
     }
 
-    /* ================= POST ORDER ================= */
+    /* ===== POST ORDER ===== */
     public void posOrder() {
-        posOrderRecursive(root);
+        posOrderRec(root);
         System.out.println();
     }
 
-    private void posOrderRecursive(Node<Integer> current) {
-        if (current == null)
-            return;
+    private void posOrderRec(Node<Integer> node) {
+        if (node == null) return;
 
-        posOrderRecursive(current.left);
-        posOrderRecursive(current.right);
-        System.out.print(current.value + " ");
+        posOrderRec(node.getLeft());
+        posOrderRec(node.getRight());
+        System.out.print(node.getValue() + " ");
     }
 
-    /* ================= SIZE ================= */
     public int size() {
-        return sizeRecursive(root);
+        return count(root);
     }
 
-    private int sizeRecursive(Node<Integer> current) {
-        if (current == null) {
-            return 0;
-        }
-
-        return 1 + sizeRecursive(current.left) + sizeRecursive(current.right);
+    private int count(Node<Integer> node) {
+        return (node == null)
+                ? 0
+                : 1 + count(node.getLeft()) + count(node.getRight());
     }
-
 }

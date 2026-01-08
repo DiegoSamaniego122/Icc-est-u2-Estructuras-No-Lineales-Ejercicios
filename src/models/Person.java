@@ -19,20 +19,22 @@ public class Person implements Comparable<Person> {
     }
 
     @Override
-    public int compareTo(Person otra) {
-        int result = Integer.compare(this.age, otra.age);
-        if (result != 0)
-            return result;
+    public int compareTo(Person other) {
 
-        result = this.name.compareTo(otra.name);
-        if (result != 0)
-            return result;
+        if (this.age < other.age) return -1;
+        if (this.age > other.age) return 1;
 
-        return System.identityHashCode(this) - System.identityHashCode(otra);
+        int cmpName = this.name.compareToIgnoreCase(other.name);
+        if (cmpName != 0) return cmpName;
+
+        return Integer.compare(
+                this.toString().hashCode(),
+                other.toString().hashCode()
+        );
     }
 
     @Override
     public String toString() {
-        return "Person{name='" + name + "', age=" + age + "}";
+        return "Person(" + name + ", " + age + ")";
     }
 }

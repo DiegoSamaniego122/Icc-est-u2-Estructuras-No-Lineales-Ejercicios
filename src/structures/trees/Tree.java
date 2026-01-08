@@ -7,81 +7,61 @@ public class Tree<T extends Comparable<T>> {
 
     protected Node<T> root;
 
-    public Tree() {
-        this.root = null;
+    public void insert(T data) {
+        root = place(root, data);
     }
 
-    // INSERT
-    public void insert(T value) {
-        root = insertRecursive(root, value);
-    }
-
-    protected Node<T> insertRecursive(Node<T> current, T value) {
-        if (current == null) {
-            return new Node<>(value);
+    private Node<T> place(Node<T> node, T data) {
+        if (node == null) {
+            return new Node<>(data);
         }
 
-        if (value.compareTo(current.value) < 0) {
-            current.left = insertRecursive(current.left, value);
-        } else if (value.compareTo(current.value) > 0) {
-            current.right = insertRecursive(current.right, value);
+        int cmp = data.compareTo(node.getValue());
+
+        if (cmp <= 0) {
+            node.setLeft(place(node.getLeft(), data));
+        } else {
+            node.setRight(place(node.getRight(), data));
         }
 
-        return current;
+        return node;
     }
 
     public void inOrder() {
-        inOrderRecursive(root);
+        print(root);
     }
 
-    protected void inOrderRecursive(Node<T> current) {
-        if (current != null) {
-            inOrderRecursive(current.left);
-            System.out.println(current.value + " ");
-            inOrderRecursive(current.right);
-        }
+    private void print(Node<T> node) {
+        if (node == null) return;
+
+        print(node.getLeft());
+        System.out.println(node.getValue());
+        print(node.getRight());
     }
 
-    public T search(T value) {
-        return searchRecursive(root, value);
-    }
+    public T search(T target) {
+        Node<T> current = root;
 
-    private T searchRecursive(Node<T> current, T value) {
-        if (current == null) {
-            return null;
+        while (current != null) {
+            int cmp = target.compareTo(current.getValue());
+
+            if (cmp == 0) return current.getValue();
+            current = (cmp < 0) ? current.getLeft() : current.getRight();
         }
-
-        int cmp = value.compareTo(current.value);
-
-        if (cmp == 0) {
-            return current.value;
-        } else if (cmp < 0) {
-            return searchRecursive(current.left, value);
-        } else {
-            return searchRecursive(current.right, value);
-        }
+        return null;
     }
 
     public Person searchByAge(int age) {
-        return searchByAgeRecursive(root, age);
+        return findAge(root, age);
     }
 
-    private Person searchByAgeRecursive(Node<T> current, int age) {
-        if (current == null) {
-            return null;
-        }
+    private Person findAge(Node<T> node, int age) {
+        if (node == null) return null;
 
-        Person p = (Person) current.value;
+        Person p = (Person) node.getValue();
+        if (p.getAge() == age) return p;
 
-        if (p.getAge() == age) {
-            return p;
-        }
-
-        Person leftResult = searchByAgeRecursive(current.left, age);
-        if (leftResult != null) {
-            return leftResult;
-        }
-
-        return searchByAgeRecursive(current.right, age);
+        Person left = findAge(node.getLeft(), age);
+        return (left != null) ? left : findAge(node.getRight(), age);
     }
 }
